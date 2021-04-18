@@ -10,9 +10,12 @@ require_once("src/Controller.php");
 error_reporting(0);
 ini_set('display_errors','0');
 
+$request = [
+    'get' => $_GET,
+    'post' => $_POST
+];
 
-$controller = new Controller($_GET, $_POST);
-$controller->run();
+(new Controller($request))->run();
 
 
 
