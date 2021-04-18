@@ -9,15 +9,16 @@ function dump($date)
 {
     echo '<br><div 
     style="
+        margin-left: 5px;
         display: inline-block;
         padding: 0 10px;
-        border: 1px solid gray;
+        border: 1px dashed gray;
         background: lightgray;
     ">
     <pre>';
     print_r($date);
     echo '</pre>
     </div>
-    <br>';
+    <br><br>';
 }
 

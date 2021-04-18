@@ -1,5 +1,5 @@
 <div>
-    <h4>lista notatek</h4>
+    <h4>Lista notatek</h4>
     <strong><?php echo $params['resultList'] ?? "" ?></strong>  
 </div>
    
