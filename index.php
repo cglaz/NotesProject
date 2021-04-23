@@ -10,9 +10,6 @@ require_once("src/Controller.php");
 
 $configuration = require_once("config/config.php");
 
-error_reporting(E_ALL);
-ini_set('display_errors','1');
-
 $request = [
     'get' => $_GET,
     'post' => $_POST
