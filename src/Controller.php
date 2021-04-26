@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace App;
 
 require_once("src/Exception/ConfigurationException.php");
+require_once("src/Exception/NotFoundException.php");
 
+use App\Exception\NotFoundException;
 use App\Exception\ConfigurationException;
 use PDO;
 
@@ -54,12 +56,28 @@ class Controller
                     header('Location: /?before=created');
                 }
                 break;
+            case 'show':
+                $page = "show";    
+                $data = $this->getRequestGet();
+                $noteId = (int) $data['id'];
+
+                try {
+                    $note = $this->database->getNote($noteId);
+                } catch (NotFoundException $e) {
+                    header('Location: /?error=noteNotFound');
+                }
+                
+                $viewParams = [
+                    'note' => $note,
+                ];
+                break;
             default:
                 $page = 'list';
                 $data = $this->getRequestGet();
                 $viewParams = [
                     'notes' => $this->database->getNotes(),
                     'before' => $data['before'] ?? null,
+                    'error' => $data['error'] ?? null,
                 ];
                 break;
         }

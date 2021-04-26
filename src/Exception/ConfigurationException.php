@@ -8,5 +8,4 @@ require_once("AppException.php");
 
 class ConfigurationException extends AppException
 {
-
 }
