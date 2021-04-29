@@ -15,6 +15,9 @@
                     case 'noteNotFound':
                         echo "Notatka nie została znaleziona";
                     break;
+                    case 'missingNoteId':
+                        echo "Niepoprawny identyfikator notatki";
+                    break;
                 }
             }?>
         </div>
