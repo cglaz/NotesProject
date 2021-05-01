@@ -7,6 +7,7 @@
         <li>Opis: <?php echo $note['description'] ?></li>        
         <li>Data utworzenia: <?php echo $note['created'] ?></li>        
     </ul>
+    <a href="/?action=edit&id=<?php echo $note['id'] ?>"><button>Edytuj</button></a>
 <?php else : ?>
 <div>
     <h1>Brak notatki do wyświetlenia!</h1>

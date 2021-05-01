@@ -2,29 +2,22 @@
 
 declare(strict_types=1);
 
-spl_autoload_register(function(string $name) {
-    var_dump($name);
+spl_autoload_register(function (string $classNamespace) {
+    $path = str_replace(['\\', 'App/'],['/', ''],$classNamespace);
+    $path = "src/$path.php";
+    require_once($path);
 });
 
-use App\Request;
-
-$request = new Request($_GET, $_POST);
-
-exit('end');
-
-require_once('src/Exception/AppException.php');
 require_once("src/Utils/debug.php");
-require_once("src/Controller/NoteController.php");
-require_once("src/Request.php");
+$configuration = require_once("config/config.php");
 
-//use App\Request;
+use App\Controller\AbstractController;
+use App\Controller\NoteController;
+use App\Request;
 use App\Exception\AppException;
 use App\Exception\ConfigurationException;
 
-$configuration = require_once("config/config.php");
-
-
-
+$request = new Request($_GET, $_POST);
 
 try {
     AbstractController::initConfiguration($configuration);

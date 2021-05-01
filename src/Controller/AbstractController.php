@@ -2,18 +2,13 @@
 
 declare(strict_types=1);
 
-namespace App;
-
-require_once("src/Exception/ConfigurationException.php");
-require_once("src/Exception/NotFoundException.php");
-require_once("Database.php");
-require_once("View.php");
-require_once("src/Request.php");
+namespace App\Controller;
 
 use App\Request;
-use App\Exception\NotFoundException;
+use App\Database;
+use App\View;
 use App\Exception\ConfigurationException;
-use PDO;
+
 
 
 abstract class AbstractController
@@ -51,6 +46,24 @@ abstract class AbstractController
         }
         $this->$action();
         
+    }
+
+    protected function redirect(string $to, array $params): void
+    {
+        $location = $to;
+
+        if (count($params)) {
+        $queryParams = [];
+        foreach ($params as $key => $value) {
+            $queryParams[] = urlencode($key).'='.urlencode($value);
+        }
+        $queryParams = implode('&', $queryParams);
+
+        $location .= '?'.$queryParams;
+        }
+
+        header("Location: $location");
+        exit;
     }
 
     private function action(): string
