@@ -35,20 +35,23 @@
         ?>
 
         <div>
-            <form action="/" class="settings-form" method="GET">
+            <form class="settings-form" action="/" method="GET">
                 <div>
-                    <div>Sortuj po: </div>
-                    <label>Tytule: <input name="sortby" type="radio" value="title" <?php echo $by === 'title' ? 'checked' : '' ?>></label>
-                    <label>Dacie: <input name="sortby" type="radio" value="created"<?php echo $order === 'created' ? 'checked' : '' ?>></label>
+                    <div>Sortuj po:</div>
+                    <label>Tytule: <input name="sortby" type="radio" value="title" <?php echo $by === 'title' ? 'checked' : '' ?> /></label>
+                    <label>Dacie: <input name="sortby" type="radio" value="created" <?php echo $by === 'created' ? 'checked' : '' ?> /></label>
                 </div>
+
                 <div>
-                    <div>Kierunek sortowania </div>
-                    <label>Rosnąco: <input name="sortorder" type="radio" value="asc" <?php echo $order === 'asc' ? 'checked' : '' ?>></label>
-                    <label>Malejąco: <input name="sortorder" type="radio" value="desc" <?php echo $order === 'desc' ? 'checked' : '' ?>></label>
+                    <div>Kierunek sortowania</div>
+                    <label>Rosnąco: <input name="sortorder" type="radio" value="asc" <?php echo $order === 'asc' ? 'checked' : '' ?> /></label>
+                    <label>Malejąco: <input name="sortorder" type="radio" value="desc" <?php echo $order === 'desc' ? 'checked' : '' ?> /></label>
                 </div>
-                <input type="submit" value="Wyślij">
-            </form>    
+
+                <input type="submit" value="Wyślij" />
+            </form>
         </div>
+
         <div class="tbl-header">
             <table>
                 <thead>
