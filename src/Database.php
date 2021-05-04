@@ -66,12 +66,28 @@ class Database
             SELECT id, title, created 
             FROM notes
             ORDER BY $sortBy $sortOrder
-            LIMIT $offset, $limit;
+            LIMIT $offset, $limit
             ";
             $result = $this->conn->query($query, PDO::FETCH_ASSOC);
             return $result->fetchAll();
         } catch (Throwable $e) {
             throw new StorageException('Nie udało się pobrać danych o notatkach', 400, $e);
+        }
+    }
+
+    public function getCount(): int
+    {
+        try {
+            $query = "SELECT count(*) AS cn FROM notes";
+            $result = $this->conn->query($query, PDO::FETCH_ASSOC);
+            $result = $result->fetch();
+            if ($result === false) {
+               throw new StorageException('Bład przy próbie pobrania ilości notatek', 400);
+            }
+            return (int) $result['cn'];
+            
+        } catch (Throwable $e) {
+            throw new StorageException('Nie udało się pobrać informacji o liczbie notatek', 400, $e);
         }
     }
 
