@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use App\Exception\NotFoundException;
-
 class NoteController extends AbstractController
 {
   private const PAGE_SIZE = 10;
@@ -111,12 +109,6 @@ class NoteController extends AbstractController
       $this->redirect('/', ['error' => 'missingNoteId']);
     }
 
-    try {
-      $note = $this->database->getNote($noteId);
-    } catch (NotFoundException $e) {
-      $this->redirect('/', ['error' => 'noteNotFound']);
-    }
-
-    return $note;
+    return $this->database->getNote($noteId);
   }
 }
