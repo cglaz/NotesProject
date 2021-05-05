@@ -43,10 +43,18 @@
     $currentPage = $page['number'] ?? 1;
     $pages = $page['pages'] ?? 1;
 
+    $phrase = $params['phrase'] ?? null;
+    $date = $params['date'] ?? null;
+
     ?>
 
     <div>
       <form class="settings-form" action="/" method="GET">
+        <div>
+          <label>Wyszukaj<input type="text" name="phrase" value="<?php echo $phrase ?>"></label>
+          <br><br>
+          <label>Wyszukaj po dacie<input type="text" name="date" value="<?php echo $date ?>"></label>
+        </div>
         <div>
           <div>Sortuj po:</div>
           <label>Tytule: <input name="sortby" type="radio" value="title" <?php echo $by === 'title' ? 'checked' : '' ?> /></label>
@@ -103,7 +111,7 @@
     </div>
 
     <?php
-    $paginationUrl = "&pagesize=$size?sortby=$by&sortorder=$order";
+    $paginationUrl = "&date=$date&phrase=$phrase&pagesize=$size?sortby=$by&sortorder=$order";
     ?>
     <ul class="pagination">
       <?php if ($currentPage !== 1) : ?>
