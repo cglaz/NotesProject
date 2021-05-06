@@ -44,11 +44,11 @@ class NoteController extends AbstractController
     }
 
     if ($phrase || $date) {
-      $noteList = $this->noteModel->searchNotes($date, $phrase, $pageNumber, $pageSize, $sortBy, $sortOrder);
-      $notes = $this->noteModel->getSearchCount($date, $phrase);
+      $noteList = $this->noteModel->search($date, $phrase, $pageNumber, $pageSize, $sortBy, $sortOrder);
+      $notes = $this->noteModel->searchCount($date, $phrase);
     } else {
-      $noteList = $this->noteModel->getNotes($pageNumber, $pageSize, $sortBy, $sortOrder);
-      $notes = $this->noteModel->getCount();
+      $noteList = $this->noteModel->list($pageNumber, $pageSize, $sortBy, $sortOrder);
+      $notes = $this->noteModel->count();
     }
 
     $this->view->render(
@@ -78,7 +78,7 @@ class NoteController extends AbstractController
         'title' => $this->request->postParam('title'),
         'description' => $this->request->postParam('description')
       ];
-      $this->noteModel->editNote($noteId, $noteData);
+      $this->noteModel->edit($noteId, $noteData);
       $this->redirect('/', ['before' => 'edited']);
     }
 
@@ -92,7 +92,7 @@ class NoteController extends AbstractController
   {
     if ($this->request->isPost()) {
       $id = (int) $this->request->postParam('id');
-      $this->noteModel->deleteNote($id);
+      $this->noteModel->delete($id);
       $this->redirect('/', ['before' => 'deleted']);
     }
 
@@ -109,6 +109,6 @@ class NoteController extends AbstractController
       $this->redirect('/', ['error' => 'missingNoteId']);
     }
 
-    return $this->noteModel->getNote($noteId);
+    return $this->noteModel->get($noteId);
   }
 }

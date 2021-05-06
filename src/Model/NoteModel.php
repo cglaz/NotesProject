@@ -9,19 +9,18 @@ use App\Exception\NotFoundException;
 use Throwable;
 use PDO;
 
-class NoteModel extends AbstractModel
+class NoteModel extends AbstractModel implements ModelInterface
 {
-    public function getNotes(
+    public function list(
         int $pageNumber, 
         int $pageSize, 
         string $sortBy, 
         string $sortOrder
-        ): array
-    {
+        ): array {
         return $this->findBy(NULL, NULL, $pageNumber, $pageSize, $sortBy, $sortOrder);
     }
 
-    public function searchNotes(
+    public function search(
         string $date,
         string $phrase,
         int $pageNumber, 
@@ -32,7 +31,7 @@ class NoteModel extends AbstractModel
         return $this->findBy($date, $phrase, $pageNumber, $pageSize, $sortBy, $sortOrder);
     }
 
-    public function getCount(): int
+    public function count(): int
     {
         try {
             $query = "SELECT count(*) AS cn FROM notes";
@@ -48,7 +47,7 @@ class NoteModel extends AbstractModel
         }
     }
 
-    public function getSearchCount(string $date, string $phrase): int
+    public function searchCount(string $date, string $phrase): int
     {
         try {
             $date = $this->conn->quote('%'.$date.'%', PDO::PARAM_STR);
@@ -66,7 +65,7 @@ class NoteModel extends AbstractModel
         }
     }
 
-    public function getNote(int $id): array{
+    public function get(int $id): array{
         try {
             $query = "SELECT * FROM notes WHERE id = $id";
             $result = $this->conn->query($query);
@@ -84,7 +83,7 @@ class NoteModel extends AbstractModel
         return $note;
     }
 
-    public function createNote(array $data): void
+    public function create(array $data): void
     {
         try {
             $title = $this->conn->quote($data['title']);
@@ -101,7 +100,7 @@ class NoteModel extends AbstractModel
         }  
     }
 
-    public function editNote(int $id, array $data): void
+    public function edit(int $id, array $data): void
     {
         try {
             $title = $this->conn->quote($data['title']);
@@ -119,7 +118,7 @@ class NoteModel extends AbstractModel
         }
     }
 
-    public function deleteNote(int $id): void
+    public function delete(int $id): void
     {
         try {
             $query = "
@@ -152,14 +151,13 @@ class NoteModel extends AbstractModel
             $sortOrder = 'desc';
           }
     
-          $wherePart = '';
+        $wherePart = '';
 
         if (isset($phrase) && isset($date)) {
             $phrase = $this->conn->quote('%' . $phrase . '%', PDO::PARAM_STR);
             $date = $this->conn->quote('%' . $date . '%', PDO::PARAM_STR);
             $wherePart = "WHERE title LIKE ($phrase) AND created LIKE ($date)";
-        } 
-        else if ($phrase) {
+        } else if ($phrase) {
             $phrase = $this->conn->quote('%' . $phrase . '%', PDO::PARAM_STR);
             $wherePart = "WHERE title LIKE ($phrase)";
         } else if ($date) {
@@ -174,7 +172,6 @@ class NoteModel extends AbstractModel
             ORDER BY $sortBy $sortOrder
             LIMIT $offset, $limit
           ";
-          dump($query);
     
           $result = $this->conn->query($query);
           return $result->fetchAll(PDO::FETCH_ASSOC);
