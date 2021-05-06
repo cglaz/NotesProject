@@ -19,7 +19,7 @@
       if (!empty($params['before'])) {
         switch ($params['before']) {
           case 'created':
-            echo 'Notatka zostało utworzona';
+            echo 'Notatka została utworzona';
             break;
           case 'deleted':
             echo 'Notatka została usunięta';

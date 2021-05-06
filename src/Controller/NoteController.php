@@ -15,7 +15,7 @@ class NoteController extends AbstractController
         'title' => $this->request->postParam('title'),
         'description' => $this->request->postParam('description')
       ];
-      $this->database->createNote($noteData);
+      $this->noteModel->createNote($noteData);
       $this->redirect('/', ['before' => 'created']);
     }
 
@@ -44,11 +44,11 @@ class NoteController extends AbstractController
     }
 
     if ($phrase || $date) {
-      $noteList = $this->database->searchNotes($date, $phrase, $pageNumber, $pageSize, $sortBy, $sortOrder);
-      $notes = $this->database->getSearchCount($date, $phrase);
+      $noteList = $this->noteModel->searchNotes($date, $phrase, $pageNumber, $pageSize, $sortBy, $sortOrder);
+      $notes = $this->noteModel->getSearchCount($date, $phrase);
     } else {
-      $noteList = $this->database->getNotes($pageNumber, $pageSize, $sortBy, $sortOrder);
-      $notes = $this->database->getCount();
+      $noteList = $this->noteModel->getNotes($pageNumber, $pageSize, $sortBy, $sortOrder);
+      $notes = $this->noteModel->getCount();
     }
 
     $this->view->render(
@@ -78,7 +78,7 @@ class NoteController extends AbstractController
         'title' => $this->request->postParam('title'),
         'description' => $this->request->postParam('description')
       ];
-      $this->database->editNote($noteId, $noteData);
+      $this->noteModel->editNote($noteId, $noteData);
       $this->redirect('/', ['before' => 'edited']);
     }
 
@@ -92,7 +92,7 @@ class NoteController extends AbstractController
   {
     if ($this->request->isPost()) {
       $id = (int) $this->request->postParam('id');
-      $this->database->deleteNote($id);
+      $this->noteModel->deleteNote($id);
       $this->redirect('/', ['before' => 'deleted']);
     }
 
@@ -109,6 +109,6 @@ class NoteController extends AbstractController
       $this->redirect('/', ['error' => 'missingNoteId']);
     }
 
-    return $this->database->getNote($noteId);
+    return $this->noteModel->getNote($noteId);
   }
 }
