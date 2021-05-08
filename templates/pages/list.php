@@ -53,7 +53,7 @@
         <div>
           <label>Wyszukaj<input type="text" name="phrase" value="<?php echo $phrase ?>"></label>
           <br><br>
-          <label>Wyszukaj po dacie<input type="text" name="date" value="<?php echo $date ?>"></label>
+          <label>Wyszukaj po dacie<input style="margin-left:5px;" type="text" name="date" value="<?php echo $date ?>"></label>
         </div>
         <div>
           <div>Sortuj po:</div>
